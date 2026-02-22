@@ -31,5 +31,6 @@ class CausalSelfAttention(nn.Module)：
 '''如果能用flash就不用自己创建掩码，Flash内部会自动创建'''
 def forward(self,x):
   B,T,C=x.size()
-q,k,v
+q,k,v=self.c_attn(x).split(self.n_embd,dim=2)
+
    
