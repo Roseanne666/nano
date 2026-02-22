@@ -32,5 +32,15 @@ class CausalSelfAttention(nn.Module)：
 def forward(self,x):
   B,T,C=x.size()
 q,k,v=self.c_attn(x).split(self.n_embd,dim=2)
+k=k.view(B,T,self.n.head,C//self.n_head).transpose(1,2)
+q=q.view(B,T,self.n.head,C//self.n_head).transpose(1,2)
+v=v.view(B,T,self.n_head,C//self.n_head).transpose(1,2)
+if self.flash:
+  y=torch.nn.functional.scaled_dot_product_attention
+else:
+att=(q@k.transpose(-2,-1))*(1.0/math.sqrt(k.size(-1)))
+att=
+                            
+
 
    
